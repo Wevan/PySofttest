@@ -16,7 +16,12 @@ if os.path.isdir(cur_dir):
 def getTestPaper(page,url):
     html = urlopen('http://www.rkpass.cn/tk_timu/6_'+page+'_'+url+'_xuanze.html')
     bsObj = BeautifulSoup(html)
+    # 找到包含标题的span标签
+    titles = bsObj.find_all('span', {'class': 'product-text'})
     bsObj = bsObj.find_all('span', {'class': 'shisi_text'})
+    if int(url) < 2:
+        # 写入标题
+        f.write(titles[1].text + '\n')
     num = 0
     for txt in bsObj:
         num += 1
@@ -43,7 +48,7 @@ def getWord(num):
         return '\n'
 
 page = -1
-while page < len(c.xuanzePage)-1:
+while page < len(GrabTheChain.xuanzePage)-1:
     page += 1
     page = str(page)
     num = 0
