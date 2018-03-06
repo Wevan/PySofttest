@@ -8,7 +8,7 @@ import datetime
 #获取页面内所有下午试题链接的列表
 def getAnliLinks(includeUrl):
     html = urlopen(includeUrl)
-    bsObj = BeautifulSoup(html)
+    bsObj = BeautifulSoup(html,"lxml")
     anliLinks = bsObj.find_all('a',{'href':re.compile('tk\_paper\/.*anli\.html')})
     anliLink = []
     for link in anliLinks:

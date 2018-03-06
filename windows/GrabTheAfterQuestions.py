@@ -10,7 +10,7 @@ import os
 import GrabTheChain
 
 #创建文件夹
-cur_dir = 'C:/Users/Administrator/Desktop'
+cur_dir = 'D:/PyCrawler/PySofttest/problems'
 folder_name = '\u8f6f\u8003\u4e0b\u5348\u8bd5\u9898'
 if os.path.isdir(cur_dir):
     os.mkdir(os.path.join(cur_dir, folder_name))
@@ -18,9 +18,9 @@ if os.path.isdir(cur_dir):
 #抓取试卷内容
 def getTestPaper(page,url):
 
-    f = open('C:/Users/Administrator/Desktop/\u8f6f\u8003\u4e0b\u5348\u8bd5\u9898/'+ page +'/'+folder_name + '/' + url + '.txt', 'w', encoding='utf-8')
+    f = open('D:/PyCrawler/PySofttest/problems/\u8f6f\u8003\u4e0b\u5348\u8bd5\u9898/'+ page +'/'+folder_name + '/' + url + '.txt', 'w', encoding='utf-8')
     html = urlopen('http://www.rkpass.cn/tk_timu/6_'+page+'_'+url+'_anli.html')
-    bsObj = BeautifulSoup(html)
+    bsObj = BeautifulSoup(html,"lxml")
 
     #找到试卷图片的url
     pictures = bsObj.findAll('img',{'src':re.compile('http\:\/\/www\.rkpass\.cn\:8080\/.*\/.*\/.*\/.*\.(png|jpg)')})
@@ -47,7 +47,8 @@ def getTestPaper(page,url):
     for picture in pictures:
         url = re.compile('http\:\/\/www\.rkpass\.cn\:8080\/ruankao\_work\_version\_0103\/userfile\/image\/(.*)')
         res = url.search(picture['src']).groups()
-        urlretrieve(picture['src'],'C:/Users/Administrator/Desktop/\u8f6f\u8003\u4e0b\u5348\u8bd5\u9898/'+page+'/' + folder_name +'/'+str(res[0]))
+        print(res)
+        urlretrieve(picture['src'],'D:/PyCrawler/PySofttest/problems/\u8f6f\u8003\u4e0b\u5348\u8bd5\u9898/'+page+'/' + folder_name +'/'+str(res[0]))
     f.close()
 
 
@@ -56,14 +57,14 @@ while page < len(GrabTheChain.xuanzePage)-1:
     page += 1
     page = str(page)
     num = 0
-    cur_dir = 'C:/Users/Administrator/Desktop/\u8f6f\u8003\u4e0b\u5348\u8bd5\u9898/'
+    cur_dir = 'D:/PyCrawler/PySofttest/problems/\u8f6f\u8003\u4e0b\u5348\u8bd5\u9898/'
     folder_name = str(GrabTheChain.anliPage[int(page)])
     if os.path.isdir(cur_dir):
         os.mkdir(os.path.join(cur_dir, folder_name))
     while num < 6:
         num += 1
         num = str(num)
-        cur_dir = 'C:/Users/Administrator/Desktop/\u8f6f\u8003\u4e0b\u5348\u8bd5\u9898/' + str(GrabTheChain.anliPage[int(page)]) + '/'
+        cur_dir = 'D:/PyCrawler/PySofttest/problems/\u8f6f\u8003\u4e0b\u5348\u8bd5\u9898/' + str(GrabTheChain.anliPage[int(page)]) + '/'
         folder_name = num
         if os.path.isdir(cur_dir):
             os.mkdir(os.path.join(cur_dir, folder_name))
